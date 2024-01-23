@@ -21,6 +21,9 @@ defmodule SymmetricEncryption.MixProject do
 
   # Run "mix help deps" to learn about dependencies.
   defp deps do
-    []
+    [
+      {:ecto, "~> 3.11"},
+      {:jason, "~> 1.3"}
+    ]
   end
 end
