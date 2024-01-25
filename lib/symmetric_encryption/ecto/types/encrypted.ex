@@ -26,8 +26,8 @@ defmodule SymmetricEncryption.Ecto.Types.Encrypted do
   @impl true
   def load(nil, _loader, _opts), do: {:ok, nil}
 
-  def load(value, loader, %{type: :json} = opts) do
-    with {:ok, data} <- load(value, loader, %{opts | type: nil}) do
+  def load(value, loader, %{format: :json} = opts) do
+    with {:ok, data} <- load(value, loader, %{opts | format: nil}) do
       Jason.decode(data)
     end
   end
@@ -40,9 +40,9 @@ defmodule SymmetricEncryption.Ecto.Types.Encrypted do
   @impl true
   def dump(nil, _dumper, _opts), do: {:ok, nil}
 
-  def dump(value, dumper, %{type: :json} = opts) do
+  def dump(value, dumper, %{format: :json} = opts) do
     with {:ok, data} <- Jason.encode(value) do
-      dump(data, dumper, %{opts | type: nil})
+      dump(data, dumper, %{opts | format: nil})
     end
   end
 
