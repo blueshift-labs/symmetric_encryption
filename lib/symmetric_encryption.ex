@@ -60,10 +60,24 @@ defmodule SymmetricEncryption do
         end
 
       {key, cipher} = Keyword.pop!(cipher, :key)
-      {:ok, key} = Base.decode64(key, padding: false)
+
+      key =
+        if Keyword.get(cipher, :binary_key, true) do
+          {:ok, key} = Base.decode64(key, padding: false)
+          key
+        else
+          key
+        end
 
       {iv, _cipher} = Keyword.pop!(cipher, :iv)
-      {:ok, iv} = Base.decode64(iv, padding: false)
+
+      iv =
+        if Keyword.get(cipher, :binary_iv, true) do
+          {:ok, iv} = Base.decode64(iv, padding: false)
+          iv
+        else
+          iv
+        end
 
       cipher = %Cipher{version: version, cipher_name: cipher_name, key: key, iv: iv}
 
